@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Loader2, CheckCircle2, XCircle } from "lucide-react";
 
 import './table.css';
 
@@ -11,6 +12,37 @@ type Row = {
 type TableProps = {
     data: Row[];
     rowsPerPage?: number;
+};
+
+const StatusIndicator = ({ status }: { status: string }) => {
+    if (status === "Validating...") {
+        return (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <Loader2 size={16} className="spin" style={{ color: "#3b82f6" }} />
+                <span>{status}</span>
+            </div>
+        );
+    }
+    
+    if (status === "Valid barcode") {
+        return (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <CheckCircle2 size={16} style={{ color: "#22c55e" }} />
+                <span style={{ color: "#22c55e" }}>{status}</span>
+            </div>
+        );
+    }
+    
+    if (status === "Invalid barcode") {
+        return (
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <XCircle size={16} style={{ color: "#ef4444" }} />
+                <span style={{ color: "#ef4444" }}>{status}</span>
+            </div>
+        );
+    }
+    
+    return <span>{status}</span>;
 };
 
 export default function Table({
@@ -27,6 +59,16 @@ export default function Table({
 
     return (
         <div>
+            <style>{`
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                .spin {
+                    animation: spin 1s linear infinite;
+                }
+            `}</style>
+            
             <table className="tableStyle" style={{ borderSpacing: 0 }}>
                 <thead>
                     <tr>
@@ -39,7 +81,9 @@ export default function Table({
                     {paginatedData.map((row, index) => (
                         <tr key={index}>
                             <td className="textStyle">{row.barcode}</td>
-                            <td className="textStyle">{row.status}</td>
+                            <td className="textStyle">
+                                <StatusIndicator status={row.status} />
+                            </td>
                         </tr>
                     ))}
 

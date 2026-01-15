@@ -36,7 +36,7 @@ export default function App() {
         style={{ backgroundImage: `url(${vehicleImage})` }}
       >
         <div className="validateCard">
-          <h1>Track your barcode</h1>
+          <h1>Validate your barcode</h1>
 
           <BarcodeForm
             value={input}

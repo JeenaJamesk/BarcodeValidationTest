@@ -11,7 +11,6 @@ const Header = () => {
                     <a href="https://www.royalmail.com" title="Royal Mail Home" rel="home">
                         <img className="imageStyle" src={logo} alt="Royal Mail Home" />
                     </a>
-                    <h1>Barcode Validator</h1>
                 </div>
             </div>
         </header>
